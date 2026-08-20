@@ -4,7 +4,8 @@ Page d'accueil d'une salle de sport premium à ciel ouvert, imaginée au cœur d
 la jungle d'Ubud, à Bali. Design organique et brut : bois de teck, tons vert
 forêt / brun / sable, typographie massive et photos en pleine végétation.
 
-Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS 4.
+Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS 4 ·
+structure shadcn/ui.
 
 ## Démarrer
 
@@ -31,17 +32,35 @@ wild-gym/
 └── src/
     ├── app/                  layout, page, globals.css, icon.svg
     ├── components/
+    │   ├── demo/             exemples d'usage isolés
     │   ├── sections/         une section de la page = un fichier
-    │   └── ui/               Reveal (apparitions), Wordmark (emblème)
-    └── lib/content.ts        tout le contenu éditorial
+    │   └── ui/               briques réutilisables (convention shadcn)
+    └── lib/
+        ├── content.ts        tout le contenu éditorial
+        └── utils.ts          cn() : clsx + tailwind-merge
 ```
+
+## Structure shadcn/ui
+
+`components.json` est présent : `npx shadcn@latest add <composant>` dépose
+directement dans `src/components/ui`, résout `@/lib/utils` et écrit dans
+`src/app/globals.css`. La configuration est volontairement en
+`cssVariables: false` pour que le CLI n'écrase pas les jetons de couleur du
+design system.
+
+| Rôle | Chemin |
+| --- | --- |
+| Composants d'interface | `src/components/ui` (alias `@/components/ui`) |
+| Composants applicatifs | `src/components` (alias `@/components`) |
+| Styles | `src/app/globals.css` |
+| Utilitaires | `src/lib` (alias `@/lib`) |
 
 ## Les sections
 
 | Section | Fichier | Contenu |
 | --- | --- | --- |
 | En-tête | `sections/SiteHeader.tsx` | Navigation translucide qui se densifie au défilement, menu mobile plein écran |
-| Hero | `sections/Hero.tsx` | Plein écran, photo de la salle sous la canopée, slogan « Là où la nature devient ta salle », bandeau de chiffres sur une latte de teck |
+| Hero | `sections/Hero.tsx` | Plein écran, photo de la salle sous la canopée, slogan « Là où la nature devient ta salle », sélecteur de plateaux, bandeau de chiffres sur une latte de teck |
 | Manifeste | `sections/Manifesto.tsx` | Le parti pris du lieu, bord déchiré organique, photo en forme de galet |
 | Bandeau | `sections/Marquee.tsx` | Défilé de mots-clés sur fond de bois clair |
 | Entraînements | `sections/Trainings.tsx` | Les 3 formats : Jungle Strength, Canopy Flow, Wild Conditioning |
@@ -51,6 +70,28 @@ wild-gym/
 
 Textes, chiffres et légendes sont tous regroupés dans `src/lib/content.ts` :
 c'est le seul fichier à toucher pour changer les mots.
+
+## Le sélecteur de plateaux
+
+`src/components/ui/interactive-selector.tsx` est une bande de panneaux qui se
+déplient au clic : le panneau actif prend sept fois la place des autres et
+révèle son libellé. Il est piloté par ses props, toutes optionnelles — sans
+aucune, il rend son jeu de données d'exemple (`src/components/demo/`).
+
+| Prop | Défaut | Rôle |
+| --- | --- | --- |
+| `options` | jeu d'exemple | `{ title, description, image, icon }[]` |
+| `title` / `subtitle` | textes d'exemple | Bandeau d'en-tête |
+| `showHeader` | `true` | Masque l'en-tête pour l'insérer dans une section |
+| `defaultIndex` | `0` | Panneau ouvert au premier rendu |
+| `activeBorderColor` / `idleBorderColor` | `#fff` / `#292929` | Liseré des panneaux |
+| `className` | — | Fusionné via `cn()` : la classe passée gagne |
+
+Le hero lui passe les cinq plateaux de `content.ts` (`heroPlateaux`), les
+photos locales et les couleurs de la palette. Les icônes viennent de
+`react-icons/fa`. Sous `sm` la bande s'empile verticalement ; l'entrée en
+cascade des panneaux est en CSS pur et se désactive sous
+`prefers-reduced-motion`.
 
 ## Design system
 

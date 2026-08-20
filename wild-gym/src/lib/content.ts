@@ -21,6 +21,44 @@ export const navLinks = [
   { label: "Rejoindre", href: "#rejoindre" },
 ] as const;
 
+/**
+ * Les cinq plateaux présentés dans le sélecteur du hero.
+ * `icon` est une clé résolue en composant dans `sections/Hero.tsx`,
+ * pour que ce fichier reste du contenu pur, sans JSX.
+ */
+export const heroPlateaux = [
+  {
+    icon: "strength",
+    title: "Aire de force",
+    description: "Teck massif, pierres de rivière",
+    image: "/images/training-strength.jpg",
+  },
+  {
+    icon: "flow",
+    title: "Deck canopée",
+    description: "Mobilité face à la vallée",
+    image: "/images/training-flow.jpg",
+  },
+  {
+    icon: "wild",
+    title: "Aire wild",
+    description: "Cordes, pneus, portage",
+    image: "/images/training-wild.jpg",
+  },
+  {
+    icon: "cold",
+    title: "Bassin de pierre",
+    description: "Récupération à 16 °C",
+    image: "/images/gallery-4.jpg",
+  },
+  {
+    icon: "trail",
+    title: "Sentier est",
+    description: "Sprints en terre rouge",
+    image: "/images/gallery-2.jpg",
+  },
+] as const;
+
 export const heroStats = [
   { value: "1 400", unit: "m²", label: "à ciel ouvert" },
   { value: "0", unit: "", label: "mur, zéro miroir" },

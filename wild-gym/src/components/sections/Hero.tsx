@@ -1,5 +1,31 @@
 import Image from "next/image";
-import { gym, heroStats } from "@/lib/content";
+import type { ReactNode } from "react";
+import {
+  FaDumbbell,
+  FaFire,
+  FaHiking,
+  FaLeaf,
+  FaWater,
+} from "react-icons/fa";
+import InteractiveSelector, {
+  type SelectorOption,
+} from "@/components/ui/interactive-selector";
+import { gym, heroPlateaux, heroStats } from "@/lib/content";
+
+const plateauIcons: Record<string, ReactNode> = {
+  strength: <FaDumbbell size={20} className="text-sand-50" />,
+  flow: <FaLeaf size={20} className="text-sand-50" />,
+  wild: <FaFire size={20} className="text-sand-50" />,
+  cold: <FaWater size={20} className="text-sand-50" />,
+  trail: <FaHiking size={20} className="text-sand-50" />,
+};
+
+const plateauOptions: SelectorOption[] = heroPlateaux.map((plateau) => ({
+  title: plateau.title,
+  description: plateau.description,
+  image: plateau.image,
+  icon: plateauIcons[plateau.icon],
+}));
 
 export default function Hero() {
   return (
@@ -20,7 +46,7 @@ export default function Hero() {
       </div>
 
       {/* Fondus : lisibilité du texte et raccord avec la section suivante */}
-      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,13,8,0.72)_0%,rgba(6,13,8,0.2)_34%,rgba(6,13,8,0.62)_72%,var(--color-forest-950)_100%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,13,8,0.74)_0%,rgba(6,13,8,0.3)_34%,rgba(6,13,8,0.66)_72%,var(--color-forest-950)_100%)]" />
       <div className="absolute inset-0 bg-[radial-gradient(105%_75%_at_12%_58%,rgba(6,13,8,0.72)_0%,rgba(6,13,8,0.24)_48%,transparent_74%)]" />
 
       {/* Feuille en surimpression, qui respire */}
@@ -28,8 +54,8 @@ export default function Hero() {
         <div className="leaf-mask h-full w-full rotate-[24deg] bg-forest-950/85" />
       </div>
 
-      <div className="relative z-10 mx-auto w-full max-w-[1400px] px-5 pb-10 pt-28 sm:px-8 sm:pt-32 lg:px-12">
-        <div className="max-w-3xl">
+      <div className="relative z-10 mx-auto grid w-full max-w-[1400px] flex-1 items-center gap-12 px-5 pb-10 pt-28 sm:px-8 sm:pt-32 lg:grid-cols-[1.02fr_0.98fr] lg:gap-16 lg:px-12">
+        <div className="max-w-2xl">
           <p className="eyebrow flex flex-wrap items-center gap-x-3 gap-y-1 text-moss-300">
             <span className="h-px w-10 bg-moss-400/70" />
             {gym.location}
@@ -37,7 +63,7 @@ export default function Hero() {
             <span className="hidden sm:inline">{gym.coordinates}</span>
           </p>
 
-          <h1 className="display mt-7 text-[clamp(2.6rem,7.2vw,6.4rem)] text-sand-50 drop-shadow-[0_18px_40px_rgba(0,0,0,0.6)]">
+          <h1 className="display mt-7 text-[clamp(2.6rem,5.6vw,4.8rem)] text-sand-50 drop-shadow-[0_18px_40px_rgba(0,0,0,0.6)]">
             Là où la nature
             <br />
             devient{" "}
@@ -58,7 +84,7 @@ export default function Hero() {
               href="#rejoindre"
               className="group inline-flex items-center justify-center gap-3 rounded-full bg-clay-500 px-8 py-4 text-sm font-bold uppercase tracking-[0.18em] text-sand-50 transition-all duration-300 hover:-translate-y-1 hover:bg-clay-400 hover:shadow-[0_22px_44px_-18px_rgba(197,107,57,0.95)]"
             >
-              Réserver ma séance d&apos;essai
+              Réserver mon essai
               <span className="transition-transform duration-300 group-hover:translate-x-1">
                 →
               </span>
@@ -70,6 +96,22 @@ export default function Hero() {
               Voir les entraînements
             </a>
           </div>
+        </div>
+
+        {/* Les cinq plateaux, à déplier */}
+        <div className="w-full">
+          <p className="eyebrow mb-4 flex items-center gap-3 text-sand-300/70">
+            Les plateaux
+            <span className="h-px flex-1 bg-sand-200/20" />
+          </p>
+          <InteractiveSelector
+            options={plateauOptions}
+            showHeader={false}
+            defaultIndex={0}
+            activeBorderColor="#b4cf8f"
+            idleBorderColor="rgba(230,216,191,0.18)"
+            className="min-h-0 bg-transparent"
+          />
         </div>
       </div>
 
@@ -91,16 +133,6 @@ export default function Hero() {
             </div>
           ))}
         </div>
-      </div>
-
-      {/* Invitation à défiler */}
-      <div className="pointer-events-none absolute bottom-32 right-8 z-10 hidden items-center gap-3 lg:flex lg:right-12">
-        <span className="text-[0.62rem] uppercase tracking-[0.28em] text-sand-300/60">
-          Défiler
-        </span>
-        <span className="flex h-11 w-6 items-start justify-center rounded-full border border-sand-200/35 p-1.5">
-          <span className="h-2.5 w-[3px] animate-scroll-hint rounded-full bg-sand-200" />
-        </span>
       </div>
     </section>
   );
