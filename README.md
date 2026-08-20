@@ -1,14 +1,14 @@
 # NextJs
 
-Dépôt d'apprentissage Next.js.
+Dépôt d’apprentissage Next.js.
 
 ## Projets
 
-- [`wild-gym/`](./wild-gym) — page d'accueil d'une salle de sport premium à ciel
-  ouvert dans la jungle d'Ubud, à Bali. Next.js 16, React 19, Tailwind CSS 4.
+- [`brin-sauvage/`](./brin-sauvage) — page d’accueil d’un fleuriste artisan de
+  quartier, à la Croix-Rousse (Lyon). Next.js 16, React 19, Tailwind CSS 4.
 
 ```bash
-cd wild-gym
+cd brin-sauvage
 npm install
 npm run dev
 ```
