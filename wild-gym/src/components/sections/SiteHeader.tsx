@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { navLinks } from "@/lib/content";
-import Wordmark from "./Wordmark";
+import Wordmark from "@/components/ui/Wordmark";
 
 export default function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
@@ -39,7 +39,7 @@ export default function SiteHeader() {
       <div className="mx-auto flex max-w-[1400px] items-center justify-between px-5 py-4 sm:px-8 lg:px-12">
         <a href="#top" className="group flex items-center gap-3">
           <Wordmark className="h-9 w-9 text-moss-400 transition-transform duration-500 group-hover:rotate-[14deg]" />
-          <span className="display text-xl leading-none tracking-tight text-sand-50 sm:text-2xl">
+          <span className="display text-xl leading-none text-sand-50 sm:text-2xl">
             Wild<span className="text-moss-400">Gym</span>
           </span>
         </a>

@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import { useState, type FormEvent } from "react";
-import Reveal from "./Reveal";
-import { gym, plans } from "@/lib/content";
+import Reveal from "@/components/ui/Reveal";
+import { gym, joinFacts, joinPerks, plans } from "@/lib/content";
 
 export default function Join() {
   const [sent, setSent] = useState(false);
@@ -11,7 +11,7 @@ export default function Join() {
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    // Démo : aucun back-end branché, on confirme simplement côté client.
+    // Démo : aucun back-end branché, on confirme côté client.
     setSent(true);
   }
 
@@ -31,7 +31,7 @@ export default function Join() {
       </div>
       <div className="absolute inset-0 bg-[linear-gradient(180deg,var(--color-forest-950)_0%,rgba(6,13,8,0.7)_26%,rgba(6,13,8,0.58)_55%,rgba(6,13,8,0.86)_100%)]" />
 
-      <div className="relative z-10 mx-auto grid max-w-[1400px] items-start gap-14 px-5 sm:px-8 lg:grid-cols-[1fr_1fr] lg:gap-20 lg:px-12">
+      <div className="relative z-10 mx-auto grid max-w-[1400px] items-start gap-14 px-5 sm:px-8 lg:grid-cols-2 lg:gap-20 lg:px-12">
         <div>
           <Reveal>
             <p className="eyebrow flex items-center gap-3 text-moss-300">
@@ -53,24 +53,16 @@ export default function Join() {
             </p>
 
             <ul className="mt-10 space-y-4 border-l-2 border-moss-500/40 pl-6">
-              {[
-                "Séance découverte encadrée, quel que soit ton niveau",
-                "Serviette, eau de source et fruits frais inclus",
-                "Vestiaires en bambou, douches d'eau de pluie",
-              ].map((item) => (
-                <li key={item} className="flex gap-3 text-sand-200/80">
+              {joinPerks.map((perk) => (
+                <li key={perk} className="flex gap-3 text-sand-200/80">
                   <span className="mt-2 h-1.5 w-1.5 shrink-0 rotate-45 bg-clay-400" />
-                  {item}
+                  {perk}
                 </li>
               ))}
             </ul>
 
             <dl className="mt-12 grid max-w-lg grid-cols-3 gap-4 border-t border-sand-200/15 pt-7">
-              {[
-                { term: "Premier créneau", detail: "5 h 45" },
-                { term: "Réponse", detail: "sous 24 h" },
-                { term: "Sur place", detail: "Ubud, vallée" },
-              ].map((fact) => (
+              {joinFacts.map((fact) => (
                 <div key={fact.term}>
                   <dt className="text-[0.6rem] uppercase tracking-[0.18em] text-sand-300/55">
                     {fact.term}

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
-import Reveal from "./Reveal";
+import Reveal from "@/components/ui/Reveal";
 import { gallery } from "@/lib/content";
 
 export default function Gallery() {
@@ -60,7 +60,7 @@ export default function Gallery() {
           <Reveal delay={120}>
             <p className="max-w-sm text-base leading-relaxed text-sand-200/70">
               Six plateaux reliés par des sentiers de pierre, du bassin froid
-              jusqu&apos;au deck perché. Fais glisser, ou clique pour agrandir.
+              jusqu&apos;au deck perché. Clique sur une photo pour l&apos;agrandir.
             </p>
           </Reveal>
         </div>
@@ -91,7 +91,12 @@ export default function Gallery() {
                     {shot.caption}
                   </span>
                   <span className="flex h-8 w-8 shrink-0 translate-y-2 items-center justify-center rounded-full border border-sand-200/40 text-sand-100 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
-                    <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" aria-hidden="true">
+                    <svg
+                      viewBox="0 0 24 24"
+                      className="h-3.5 w-3.5"
+                      fill="none"
+                      aria-hidden="true"
+                    >
                       <path
                         d="M9 3H3v6M15 21h6v-6M3 3l7.5 7.5M21 21l-7.5-7.5"
                         stroke="currentColor"

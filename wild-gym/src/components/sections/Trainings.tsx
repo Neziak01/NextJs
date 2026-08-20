@@ -1,15 +1,18 @@
 import Image from "next/image";
-import Reveal from "./Reveal";
+import Reveal from "@/components/ui/Reveal";
 import { trainings } from "@/lib/content";
 
 /** Jauge d'intensité : cinq griffes, remplies selon le niveau. */
 function Intensity({ level }: { level: number }) {
   return (
-    <span className="flex items-center gap-1.5" aria-label={`Intensité ${level} sur 5`}>
+    <span
+      className="flex items-center gap-1.5"
+      aria-label={`Intensité ${level} sur 5`}
+    >
       {[1, 2, 3, 4, 5].map((step) => (
         <span
           key={step}
-          className={`h-3 w-[3px] rounded-full transition-colors ${
+          className={`h-3 w-[3px] rounded-full ${
             step <= level ? "bg-clay-400" : "bg-sand-200/25"
           }`}
         />

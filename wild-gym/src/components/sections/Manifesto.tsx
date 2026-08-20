@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Reveal from "./Reveal";
+import Reveal from "@/components/ui/Reveal";
 import { manifestoPoints } from "@/lib/content";
 
 export default function Manifesto() {
@@ -8,7 +8,7 @@ export default function Manifesto() {
       id="manifeste"
       className="texture-fiber grain relative overflow-hidden py-24 text-wood-900 sm:py-32"
     >
-      {/* Bord organique, comme une déchirure de fibre */}
+      {/* Bord organique, comme une fibre déchirée */}
       <svg
         className="absolute inset-x-0 -top-px h-14 w-full text-forest-950 sm:h-20"
         viewBox="0 0 1440 80"
@@ -57,7 +57,7 @@ export default function Manifesto() {
             {manifestoPoints.map((point, i) => (
               <Reveal key={point.title} delay={160 + i * 110}>
                 <dt className="display flex items-baseline gap-3 text-xl text-wood-900">
-                  <span className="text-sm font-body font-bold tracking-[0.2em] text-clay-600">
+                  <span className="font-body text-sm font-bold tracking-[0.2em] text-clay-600">
                     0{i + 1}
                   </span>
                   {point.title}
@@ -74,7 +74,7 @@ export default function Manifesto() {
           <div className="blob-a relative aspect-[4/5] w-full overflow-hidden shadow-[0_40px_80px_-40px_rgba(36,22,16,0.8)]">
             <Image
               src="/images/manifeste.jpg"
-              alt="Végétation tropicale dense traversée par la lumière du matin"
+              alt="Portique de bois dans la végétation tropicale, à la lumière chaude de fin de journée"
               fill
               sizes="(max-width: 1024px) 90vw, 42vw"
               className="object-cover"
@@ -82,11 +82,9 @@ export default function Manifesto() {
             <div className="absolute inset-0 bg-gradient-to-t from-forest-950/55 via-transparent to-transparent" />
           </div>
 
-          {/* Pastille de bois posée sur la photo */}
+          {/* Pastille de teck posée sur la photo */}
           <div className="texture-wood absolute -bottom-8 -left-4 flex h-36 w-36 flex-col items-center justify-center rounded-full border border-sand-200/15 text-center shadow-[0_24px_50px_-20px_rgba(0,0,0,0.7)] sm:-left-10 sm:h-44 sm:w-44">
-            <span className="display text-4xl text-sand-50 sm:text-5xl">
-              2019
-            </span>
+            <span className="display text-4xl text-sand-50 sm:text-5xl">2019</span>
             <span className="mt-1 px-4 text-[0.62rem] uppercase tracking-[0.22em] text-sand-300">
               Première clairière défrichée
             </span>

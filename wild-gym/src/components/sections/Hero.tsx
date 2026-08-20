@@ -19,12 +19,12 @@ export default function Hero() {
         />
       </div>
 
-      {/* Ombres portées et fondu vers le bas */}
+      {/* Fondus : lisibilité du texte et raccord avec la section suivante */}
       <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,13,8,0.72)_0%,rgba(6,13,8,0.2)_34%,rgba(6,13,8,0.62)_72%,var(--color-forest-950)_100%)]" />
       <div className="absolute inset-0 bg-[radial-gradient(105%_75%_at_12%_58%,rgba(6,13,8,0.72)_0%,rgba(6,13,8,0.24)_48%,transparent_74%)]" />
 
       {/* Feuille en surimpression, qui respire */}
-      <div className="pointer-events-none absolute -left-28 top-[-10%] h-[48vh] w-[48vh] origin-top animate-sway-slow opacity-45 blur-[3px]">
+      <div className="pointer-events-none absolute -left-28 top-[-10%] h-[48vh] w-[48vh] origin-top animate-sway opacity-45 blur-[3px]">
         <div className="leaf-mask h-full w-full rotate-[24deg] bg-forest-950/85" />
       </div>
 
@@ -73,7 +73,7 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Bandeau de chiffres, en bois */}
+      {/* Bandeau de chiffres, sur une latte de teck */}
       <div className="texture-wood relative z-10 border-t border-sand-200/10">
         <div className="mx-auto grid max-w-[1400px] grid-cols-2 px-5 sm:px-8 lg:grid-cols-4 lg:px-12">
           {heroStats.map((stat) => (

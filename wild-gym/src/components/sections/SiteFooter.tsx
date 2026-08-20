@@ -1,11 +1,5 @@
-import { gym, navLinks } from "@/lib/content";
-import Wordmark from "./Wordmark";
-
-const socials = [
-  { label: "Instagram", href: "#" },
-  { label: "Strava", href: "#" },
-  { label: "YouTube", href: "#" },
-];
+import { gym, navLinks, socials } from "@/lib/content";
+import Wordmark from "@/components/ui/Wordmark";
 
 export default function SiteFooter() {
   return (
@@ -97,7 +91,9 @@ export default function SiteFooter() {
         </div>
 
         <div className="mt-14 flex flex-col gap-3 border-t border-sand-200/10 pt-7 text-[0.7rem] uppercase tracking-[0.16em] text-sand-300/45 sm:flex-row sm:items-center sm:justify-between">
-          <p>© {new Date().getFullYear()} Wild Gym Bali — Site de démonstration</p>
+          <p>
+            © {new Date().getFullYear()} Wild Gym Bali — Site de démonstration
+          </p>
           <p>Photos placeholder générées localement</p>
         </div>
       </div>

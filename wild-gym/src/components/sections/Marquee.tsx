@@ -1,11 +1,11 @@
 import { marqueeWords } from "@/lib/content";
 
-/** Bandeau défilant en bois brut, entre deux sections. */
+/** Bandeau défilant en bois clair, entre deux sections. */
 export default function Marquee() {
   const words = [...marqueeWords, ...marqueeWords];
 
   return (
-    <div className="texture-wood-light relative overflow-hidden border-y border-wood-900/60 bg-clay-600 py-4">
+    <div className="texture-wood-light relative overflow-hidden border-y border-wood-900/60 py-4">
       <div className="grain absolute inset-0" />
       <div className="flex w-max animate-marquee items-center gap-10 whitespace-nowrap">
         {words.map((word, i) => (

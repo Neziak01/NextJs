@@ -43,19 +43,7 @@ export const manifestoPoints = [
   },
 ] as const;
 
-export type Training = {
-  index: string;
-  name: string;
-  tagline: string;
-  description: string;
-  image: string;
-  duration: string;
-  intensity: number;
-  group: string;
-  tags: readonly string[];
-};
-
-export const trainings: readonly Training[] = [
+export const trainings = [
   {
     index: "01",
     name: "Jungle Strength",
@@ -94,6 +82,10 @@ export const trainings: readonly Training[] = [
   },
 ] as const;
 
+/**
+ * La galerie pave exactement une grille de 6 colonnes :
+ * bandeau 4×3 + colonne 2×4, puis 2×3 + 2×3 + 2×2, puis bandeau 6×2.
+ */
 export const gallery = [
   {
     src: "/images/gallery-1.jpg",
@@ -139,6 +131,18 @@ export const plans = [
   { value: "resident", label: "Résident — 6 mois + coaching" },
 ] as const;
 
+export const joinFacts = [
+  { term: "Premier créneau", detail: "5 h 45" },
+  { term: "Réponse", detail: "sous 24 h" },
+  { term: "Sur place", detail: "Ubud, vallée" },
+] as const;
+
+export const joinPerks = [
+  "Séance découverte encadrée, quel que soit ton niveau",
+  "Serviette, eau de source et fruits frais inclus",
+  "Vestiaires en bambou, douches d'eau de pluie",
+] as const;
+
 export const marqueeWords = [
   "Pieds nus",
   "Teck & pierre",
@@ -147,4 +151,10 @@ export const marqueeWords = [
   "Sueur & mousson",
   "Lever du soleil",
   "Rivière froide",
+] as const;
+
+export const socials = [
+  { label: "Instagram", href: "#" },
+  { label: "Strava", href: "#" },
+  { label: "YouTube", href: "#" },
 ] as const;

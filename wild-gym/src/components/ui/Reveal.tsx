@@ -1,6 +1,12 @@
 "use client";
 
-import { useEffect, useRef, useState, type ElementType, type ReactNode } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type ElementType,
+  type ReactNode,
+} from "react";
 
 type RevealProps = {
   children: ReactNode;
@@ -10,7 +16,7 @@ type RevealProps = {
   as?: ElementType;
 };
 
-/** Fait apparaître son contenu en fondu montant lorsqu'il entre dans le champ. */
+/** Fait apparaître son contenu en fondu montant à l'entrée dans le champ. */
 export default function Reveal({
   children,
   delay = 0,
