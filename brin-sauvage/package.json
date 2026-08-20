@@ -28,5 +28,8 @@
     "tailwindcss": "^4",
     "typescript": "^5"
   },
-  "description": "Page d\u2019accueil BRIN SAUVAGE \u2014 fleuriste artisan \u00e0 la Croix-Rousse, Lyon."
+  "description": "Page d\u2019accueil BRIN SAUVAGE \u2014 fleuriste artisan \u00e0 la Croix-Rousse, Lyon.",
+  "engines": {
+    "node": "24.x"
+  }
 }
