@@ -1,0 +1,247 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------ thème */
+
+@theme {
+  /* Vert forêt — la canopée */
+  --color-forest-950: #060d08;
+  --color-forest-900: #0c1710;
+  --color-forest-850: #102015;
+  --color-forest-800: #142a1b;
+  --color-forest-700: #1d3c26;
+  --color-forest-600: #2a5734;
+  --color-forest-500: #3d7444;
+
+  /* Mousse — les pousses */
+  --color-moss-500: #6f9152;
+  --color-moss-400: #8fb26a;
+  --color-moss-300: #b4cf8f;
+
+  /* Bois — teck, bambou, terre */
+  --color-wood-950: #17100a;
+  --color-wood-900: #241610;
+  --color-wood-800: #3a2416;
+  --color-wood-700: #57351f;
+  --color-wood-600: #7a4c2c;
+  --color-wood-500: #a06a3f;
+  --color-wood-400: #c08b5c;
+
+  /* Sable — la lumière */
+  --color-sand-50: #faf5ec;
+  --color-sand-100: #f2e9d9;
+  --color-sand-200: #e6d8bf;
+  --color-sand-300: #d3bf9c;
+  --color-sand-400: #b9a179;
+
+  /* Argile — l'accent */
+  --color-clay-600: #a8552c;
+  --color-clay-500: #c56b39;
+  --color-clay-400: #dd8b53;
+
+  --font-display: var(--font-anton), "Arial Black", sans-serif;
+  --font-body: var(--font-barlow), ui-sans-serif, system-ui, sans-serif;
+
+  --animate-sway: sway 11s ease-in-out infinite;
+  --animate-sway-slow: sway 17s ease-in-out infinite;
+  --animate-drift: drift 26s ease-in-out infinite alternate;
+  --animate-scroll-hint: scroll-hint 2.4s ease-in-out infinite;
+  --animate-marquee: marquee 42s linear infinite;
+}
+
+@keyframes sway {
+  0%,
+  100% {
+    transform: rotate(-2.5deg) translateY(0);
+  }
+  50% {
+    transform: rotate(2.5deg) translateY(-10px);
+  }
+}
+
+@keyframes drift {
+  from {
+    transform: scale(1.06) translate3d(0, 0, 0);
+  }
+  to {
+    transform: scale(1.14) translate3d(-1.5%, -1.5%, 0);
+  }
+}
+
+@keyframes scroll-hint {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  35% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(14px);
+    opacity: 0;
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ------------------------------------------------------------------- base */
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--color-forest-950);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+body {
+  background-color: var(--color-forest-950);
+  color: var(--color-sand-100);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background-color: var(--color-clay-500);
+  color: var(--color-sand-50);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-moss-300);
+  outline-offset: 3px;
+}
+
+/* --------------------------------------------------------------- matières */
+
+/* Grain argentique, posé au-dessus de toute la page. */
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.28;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+}
+
+/* Veinage de bois : lattes irrégulières + fibres. */
+.texture-wood {
+  background-color: var(--color-wood-950);
+  background-image:
+    repeating-linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.34) 0 2px,
+      rgba(0, 0, 0, 0) 2px 7px,
+      rgba(255, 255, 255, 0.035) 7px 9px,
+      rgba(0, 0, 0, 0) 9px 22px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.5) 0 3px,
+      rgba(0, 0, 0, 0) 3px 96px,
+      rgba(255, 255, 255, 0.05) 96px 99px,
+      rgba(0, 0, 0, 0) 99px 190px
+    ),
+    linear-gradient(180deg, rgba(160, 106, 63, 0.16), rgba(0, 0, 0, 0.5));
+}
+
+.texture-wood-light {
+  background-color: var(--color-wood-600);
+}
+
+/* Fibre végétale claire, pour les sections sable. */
+.texture-fiber {
+  background-color: var(--color-sand-100);
+  background-image:
+    repeating-linear-gradient(
+      74deg,
+      rgba(87, 53, 31, 0.05) 0 1px,
+      rgba(0, 0, 0, 0) 1px 6px
+    ),
+    repeating-linear-gradient(
+      -74deg,
+      rgba(87, 53, 31, 0.045) 0 1px,
+      rgba(0, 0, 0, 0) 1px 7px
+    );
+}
+
+/* Ombres de feuillage projetées sur les fonds sombres. */
+.texture-canopy {
+  background-image:
+    radial-gradient(60% 42% at 12% 0%, rgba(143, 178, 106, 0.14), transparent 70%),
+    radial-gradient(50% 38% at 88% 12%, rgba(197, 107, 57, 0.12), transparent 72%),
+    radial-gradient(70% 55% at 50% 108%, rgba(6, 13, 8, 0.9), transparent 70%);
+}
+
+/* --------------------------------------------------------------- formes */
+
+.blob-a {
+  border-radius: 62% 38% 46% 54% / 48% 42% 58% 52%;
+}
+.blob-b {
+  border-radius: 40% 60% 63% 37% / 58% 40% 60% 42%;
+}
+.leaf-mask {
+  border-radius: 48% 6% 48% 6% / 48% 6% 48% 6%;
+}
+.leaf-mask-alt {
+  border-radius: 6% 48% 6% 48% / 6% 48% 6% 48%;
+}
+
+/* ------------------------------------------------------------ typographie */
+
+.display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: 0.005em;
+  line-height: 0.88;
+  text-transform: uppercase;
+}
+
+.eyebrow {
+  font-family: var(--font-body);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.32em;
+  font-size: 0.72rem;
+}
+
+.outline-text {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--color-sand-300);
+}
+
+/* --------------------------------------------------------- apparitions */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal[data-visible="true"] {
+  opacity: 1;
+  transform: none;
+}
