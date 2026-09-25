@@ -18,7 +18,9 @@ const VIEWS: { id: string; label: string; pos: [number, number, number]; target?
   { id: "34g", label: "3/4 gauche", pos: [3.7, 1.5, 3.7] },
   { id: "plongee", label: "Plongée", pos: [0.8, 4.6, 2.6] },
   { id: "contre", label: "Contre-plongée", pos: [0.5, 0.3, 3.4] },
-  { id: "portrait", label: "Portrait", pos: [-0.3, 2.12, 1.05], target: [0, 2.04, 0] },
+  { id: "visage", label: "Visage", pos: [0, 1.99, 0.72], target: [0, 1.975, 0] },
+  { id: "profilv", label: "Profil visage", pos: [-0.75, 1.99, 0.04], target: [0, 1.975, 0] },
+  { id: "portrait", label: "Portrait 3/4", pos: [-0.5, 2.02, 0.52], target: [0, 1.975, 0] },
 ];
 
 const POSES: { id: Pose; label: string }[] = [
@@ -70,7 +72,7 @@ export default function GutsViewer() {
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.target.copy(TARGET);
     controls.enableDamping = true;
-    controls.minDistance = 1.2;
+    controls.minDistance = 0.4;
     controls.maxDistance = 9;
     controls.autoRotate = true;
     controls.autoRotateSpeed = 1.2;
@@ -118,9 +120,17 @@ export default function GutsViewer() {
         scene.add(model);
       },
       goTo(pos, target) {
-        const tgt = target ? new THREE.Vector3(...target) : TARGET;
+        let tgt = TARGET;
+        let dest = new THREE.Vector3(...pos);
+        if (target) {
+          // close-ups follow the head, whatever the pose
+          const head = model.getObjectByName("tete");
+          const h = head ? head.getWorldPosition(new THREE.Vector3()) : new THREE.Vector3(...target);
+          dest = dest.sub(new THREE.Vector3(...target)).add(h);
+          tgt = h;
+        }
         const from = new THREE.Spherical().setFromVector3(camera.position.clone().sub(controls.target));
-        const to = new THREE.Spherical().setFromVector3(new THREE.Vector3(...pos).sub(tgt));
+        const to = new THREE.Spherical().setFromVector3(dest.sub(tgt));
         // take the short way around
         while (to.theta - from.theta > Math.PI) to.theta -= Math.PI * 2;
         while (to.theta - from.theta < -Math.PI) to.theta += Math.PI * 2;

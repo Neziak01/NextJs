@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { buildSculptedHead } from "./gutsHead";
 
 /**
  * Procedural Guts figurine (Berserk), built from primitives.
@@ -97,7 +98,7 @@ function makeMaterials() {
     }),
     under: new THREE.MeshStandardMaterial({ color: 0x141416, roughness: 0.9, name: "tissu" }),
     leather: new THREE.MeshStandardMaterial({ color: 0x2b211a, roughness: 0.75, name: "cuir" }),
-    skin: new THREE.MeshStandardMaterial({ color: 0xc79d82, roughness: 0.62, name: "peau" }),
+    skin: new THREE.MeshStandardMaterial({ color: 0xc19479, roughness: 0.62, name: "peau" }),
     hair: new THREE.MeshStandardMaterial({ color: 0x0b0a0a, roughness: 0.7, flatShading: true, name: "cheveux" }),
     dark: new THREE.MeshStandardMaterial({ color: 0x060606, roughness: 0.6, name: "noir" }),
     scar: new THREE.MeshStandardMaterial({ color: 0x8a5a4c, roughness: 0.7, name: "cicatrice" }),
@@ -312,101 +313,6 @@ function buildDragonSlayer(mats: Mats, rng: Rng) {
   cord.position.set(0.03, -0.3, 0);
   cord.rotation.z = 0.3;
   return g;
-}
-
-/* ------------------------------------------------------------------ */
-/* Head                                                                */
-/* ------------------------------------------------------------------ */
-
-function buildHead(mats: Mats, rng: Rng) {
-  const head = new THREE.Group();
-  head.name = "tete";
-
-  const skull = mesh(new THREE.SphereGeometry(0.1, 24, 18), mats.skin, head, "crane");
-  skull.scale.set(0.92, 1.08, 1.0);
-  // heavy square jaw
-  const jaw = mesh(new THREE.SphereGeometry(0.085, 16, 12), mats.skin, head, "machoire");
-  jaw.scale.set(1.0, 0.8, 1.02);
-  jaw.position.set(0, -0.05, 0.012);
-  const chin = mesh(new THREE.SphereGeometry(0.032, 12, 8), mats.skin, head);
-  chin.scale.set(1.3, 0.8, 1);
-  chin.position.set(0, -0.098, 0.05);
-  // brow ridge
-  const brow = mesh(new THREE.BoxGeometry(0.115, 0.022, 0.04), mats.skin, head);
-  brow.position.set(0, 0.024, 0.074);
-  brow.rotation.x = -0.15;
-  // nose
-  const nose = mesh(new THREE.ConeGeometry(0.016, 0.05, 4), mats.skin, head, "nez");
-  nose.position.set(0, -0.022, 0.1);
-  nose.rotation.x = 1.95;
-  nose.rotation.y = Math.PI / 4;
-  // eyes (narrow, glaring)
-  for (const s of [-1, 1]) {
-    const eye = mesh(new THREE.SphereGeometry(0.013, 10, 6), mats.dark, head);
-    eye.scale.set(1.6, 0.55, 0.6);
-    eye.position.set(s * 0.037, 0.004, 0.092);
-    // angry brows
-    const eb = mesh(new THREE.BoxGeometry(0.055, 0.012, 0.015), mats.hair, head);
-    eb.position.set(s * 0.037, 0.03, 0.1);
-    eb.rotation.z = s * -0.32;
-    // ears
-    const ear = mesh(new THREE.SphereGeometry(0.022, 8, 6), mats.skin, head);
-    ear.scale.set(0.45, 1, 0.8);
-    ear.position.set(s * 0.093, -0.005, -0.005);
-  }
-  // mouth
-  const mouth = mesh(new THREE.BoxGeometry(0.045, 0.005, 0.01), mats.dark, head);
-  mouth.position.set(0, -0.06, 0.09);
-  // the scar across the nose bridge
-  const scar = mesh(new THREE.BoxGeometry(0.1, 0.006, 0.012), mats.scar, head, "cicatrice");
-  scar.position.set(0.004, -0.004, 0.103);
-  scar.rotation.z = -0.28;
-  // neck stubble shadow / collar
-  // Hair: a dense crown of spikes, heavier at the back, bangs falling over the forehead
-  const hairBase = mesh(new THREE.SphereGeometry(0.104, 18, 12, 0, Math.PI * 2, 0, Math.PI * 0.55), mats.hair, head);
-  hairBase.scale.set(0.95, 1.1, 1.04);
-  hairBase.position.y = 0.012;
-  hairBase.rotation.x = -0.25;
-  const up = new THREE.Vector3(0, 1, 0);
-  const spikes = 150;
-  for (let i = 0; i < spikes; i++) {
-    // fibonacci sphere sampling
-    const k = (i + 0.5) / spikes;
-    const phi = Math.acos(1 - 2 * k);
-    const th = Math.PI * (1 + Math.sqrt(5)) * i;
-    const dir = new THREE.Vector3(Math.sin(phi) * Math.cos(th), Math.cos(phi), Math.sin(phi) * Math.sin(th));
-    // skip face & lower head
-    const front = dir.z > 0.25 && dir.y < 0.45;
-    if (dir.y < -0.2) continue;
-    if (front && dir.y < 0.1) continue;
-    if (Math.abs(dir.x) > 0.75 && dir.y < 0.05) continue; // above the ears only
-    const len = 0.05 + rng() * 0.07 + (dir.z < 0 ? 0.02 : 0);
-    const cone = mesh(new THREE.ConeGeometry(0.018 + rng() * 0.012, len, 4), mats.hair, head);
-    const out = dir.clone();
-    if (front) {
-      // bangs point down & forward over the forehead
-      out.set(dir.x * 0.8, -0.35, 0.9).normalize();
-    } else {
-      out.y += 0.35;
-      out.normalize();
-    }
-    out.x += (rng() - 0.5) * 0.3;
-    out.z += (rng() - 0.5) * 0.3;
-    out.normalize();
-    cone.quaternion.setFromUnitVectors(up, out);
-    const p = dir.clone().multiplyScalar(0.098);
-    p.y = p.y * 1.08 + 0.015;
-    cone.position.copy(p).addScaledVector(out, len * 0.38);
-  }
-  // explicit forelock strands
-  for (let i = 0; i < 5; i++) {
-    const x = -0.05 + i * 0.025;
-    const cone = mesh(new THREE.ConeGeometry(0.013, 0.05 + rng() * 0.025, 4), mats.hair, head);
-    cone.position.set(x, 0.07, 0.085);
-    cone.rotation.x = Math.PI - 0.6;
-    cone.rotation.z = (rng() - 0.5) * 0.5;
-  }
-  return head;
 }
 
 /* ------------------------------------------------------------------ */
@@ -793,8 +699,8 @@ export function buildGuts(pose: Pose = "repos") {
   const neck = new THREE.Group();
   neck.position.y = 0.53;
   spine.add(neck);
-  mesh(new THREE.CylinderGeometry(0.055, 0.065, 0.1, 10), mats.skin, neck).position.y = 0.03;
-  const head = buildHead(mats, rng);
+  mesh(new THREE.CylinderGeometry(0.058, 0.072, 0.12, 14), mats.skin, neck).position.y = 0.03;
+  const head = buildSculptedHead(mats, rng);
   head.position.set(0, 0.16, 0.01);
   neck.add(head);
 
