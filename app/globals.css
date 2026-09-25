@@ -1,0 +1,140 @@
+:root {
+  --bg: #08080a;
+  --ink: #e8e3d9;
+  --muted: #8d877c;
+  --line: #2a2a2e;
+  --accent: #9b1c14;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.stage {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background: radial-gradient(ellipse at 50% 40%, #1d1d22 0%, #0b0b0d 55%, #050506 100%);
+}
+
+.canvas {
+  position: absolute;
+  inset: 0;
+}
+
+.title {
+  position: absolute;
+  top: 20px;
+  left: 24px;
+  pointer-events: none;
+}
+
+.title h1 {
+  margin: 0;
+  font-size: 44px;
+  letter-spacing: 0.35em;
+  font-weight: 600;
+}
+
+.title p {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-style: italic;
+}
+
+.panel {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 220px;
+  padding: 12px 16px;
+  background: rgba(12, 12, 14, 0.78);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(6px);
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.row.wrap {
+  flex-wrap: wrap;
+}
+
+button {
+  font: inherit;
+  font-size: 13px;
+  color: var(--ink);
+  background: #141417;
+  border: 1px solid var(--line);
+  padding: 6px 10px;
+  cursor: pointer;
+}
+
+button:hover {
+  border-color: #55555c;
+}
+
+button.on {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.hint {
+  position: absolute;
+  bottom: 12px;
+  width: 100%;
+  text-align: center;
+  margin: 0;
+  font-size: 12px;
+  color: var(--muted);
+  pointer-events: none;
+}
+
+@media (max-width: 760px) {
+  .title h1 {
+    font-size: 30px;
+  }
+  .panel {
+    top: auto;
+    right: 16px;
+    left: 16px;
+    bottom: 34px;
+    transform: none;
+    width: auto;
+    gap: 8px;
+    padding: 10px;
+  }
+  .row.wrap {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+}
